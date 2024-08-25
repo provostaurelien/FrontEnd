@@ -62,25 +62,37 @@ function afficherImagesFiltrees(images, categorie) {
     });
 }
 
+
+// Fonction pour gérer le clic sur les boutons et mettre à jour la classe "active"
+function gererCliqueBouton(button, images, categorie) {
+    button.addEventListener("click", function() {
+        // Supprimer la classe active de tous les boutons
+        const boutons = document.querySelectorAll(".btn");
+        boutons.forEach(function(act) {
+            act.classList.remove("active");
+        });
+
+        // Ajouter la classe active au bouton cliqué
+        button.classList.add("active");
+
+        // Afficher les images filtrées
+        afficherImagesFiltrees(images, categorie);
+    });
+}
+
 async function filtre() {
-    const images = await RecuperationImages(); // Récupère les images
+    const images = await RecuperationImages(); 
 
-    // Ajouter des écouteurs d'événements sur chaque bouton de filtre
-    document.querySelector(".btnTous").addEventListener("click", function() {
-        afficherImagesFiltrees(images);
-    });
+    const btnObjets = document.querySelector(".Objets");
+    const btnAppartements = document.querySelector(".Appartements");
+    const btnHotels = document.querySelector(".HotelsRestaurants");
+    const btnTous = document.querySelector(".Tous");
 
-    document.querySelector(".btnObjets").addEventListener("click", function() {
-        afficherImagesFiltrees(images, "Objets");
-    });
-
-    document.querySelector(".btnAppartements").addEventListener("click", function() {
-        afficherImagesFiltrees(images, "Appartements");
-    });
-
-    document.querySelector(".btnHotelsRestaurants").addEventListener("click", function() {
-        afficherImagesFiltrees(images, "Hotels & restaurants");
-    });
+    // Gérer les clics pour chaque bouton en appelant la fonction précéndente pour le button active
+    gererCliqueBouton(btnObjets, images, "Objets");
+    gererCliqueBouton(btnAppartements, images, "Appartements");
+    gererCliqueBouton(btnHotels, images, "Hotels & restaurants");
+    gererCliqueBouton(btnTous, images, null); // null pour afficher toutes les images
 }
 
 
