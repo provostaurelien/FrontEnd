@@ -28,6 +28,7 @@ article, aside, details, figcaption, figure,
 footer, header, hgroup, menu, nav, section {
 	display: block;
 }
+
 body {
 	line-height: 1;
 }
@@ -47,11 +48,15 @@ table {
 	border-spacing: 0;
 }
 /** end reset css**/
+/** rajout display flex pour avoir le pied de page en base de page sur login**/
 body {
 	max-width: 1140px;
 	margin:auto;
 	font-family: 'Work Sans' ;
 	font-size: 14px;
+	display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 header {
 	display: flex;
@@ -61,6 +66,8 @@ header {
 section {
 	margin: 50px 0
 }
+
+
 
 h1{
 	display: flex;
@@ -126,6 +133,16 @@ li:hover {
 	margin-bottom: 1em;
 }
 
+.appBar_navItem {
+    text-decoration: none;
+	color: #000000;
+}
+
+.appBar_navItem.active  {
+	font-weight: 600;
+}
+
+
 .filtres {
 	display: flex;
 	justify-content: center;
@@ -175,6 +192,39 @@ margin: auto;
 #contact textarea {
 	border: none;
 	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+
+#logIn {
+	width: 50%;
+margin: auto;
+}
+#logIn > * {
+	text-align: center;
+
+}
+#logIn h2{
+	margin-bottom: 20px;
+}
+#logIn form {
+	text-align: left;
+	margin-top:30px;
+	display: flex;
+	flex-direction: column;
+}
+
+#logIn input {
+	height: 50px;
+	font-size: 1.2em;
+	border: none;
+	box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+#logIn label {
+	margin: 2em 0 1em 0;
+}
+
+#logIn a {
+	display: flex;
+	flex-direction: column;
 }
 
 
@@ -229,6 +279,6 @@ input[type="submit"]{
 footer nav ul {
 	display: flex;
 	justify-content: flex-end;
-	margin: 2em
+	margin: 3em
 }
 
