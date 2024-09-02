@@ -1,3 +1,5 @@
+import { logout } from "./admin.js";
+
 async function RecuperationImages() {
   try {
     const response = await fetch(`http://localhost:5678/api/works`);
@@ -95,16 +97,3 @@ async function filtre() {
 // Appel des fonctions
 RecuperationImages();
 filtre();
-
-// Récupérer les données du local storage
-//const userDataString = localStorage.getItem('userData');
-
-//if (userDataString) {
-//Convertir la chaîne JSON en objet JavaScript
-//   const userData = JSON.parse(userDataString);
-
-// Utiliser les données récupérées
-//   console.log('Données utilisateur:', userData);
-//} else {
-//    console.log('Aucune donnée trouvée dans le local storage');
-//}

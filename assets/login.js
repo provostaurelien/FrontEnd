@@ -28,7 +28,7 @@ async function envoiLogin() {
           // stocker la response dans le local storage
           localStorage.setItem("userData", JSON.stringify(data));
           // Rediriger vers la page index
-          window.location.href = "http://127.0.0.1:5500/FrontEnd/index.html";
+          window.location.href = "./index.html";
         } else {
           console.error(
             "Erreur lors de la requête:",

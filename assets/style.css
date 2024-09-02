@@ -182,9 +182,15 @@ nav li {
 li:hover {
   color: #b1663c;
 }
+
+
+
+
 #introduction {
   display: flex;
   align-items: center;
+  /** rajout margin pour coller à la maquette **/
+  margin-bottom: 120px;
 }
 #introduction figure {
   flex: 1;
@@ -236,6 +242,23 @@ li:hover {
 
 .gallery img {
   width: 100%;
+}
+
+  
+
+.edit-icon button {
+  border: none;
+  background-color: white;
+  text-align: center;
+  padding: 6px;
+  font-size: 14px;
+  font-weight: 400;
+  margin-left: 20px; 
+}
+
+.mesProjets {
+  display :flex;
+  justify-content:center;
 }
 #contact {
   width: 50%;
@@ -300,7 +323,7 @@ li:hover {
   flex-direction: column;
 }
 
-button {
+.filtres button {
   font-family: "Syne";
   font-weight: 700;
   color: #1d6154;
@@ -312,7 +335,7 @@ button {
   padding: 9px 20px;
 }
 
-button:hover {
+.filtres button:hover {
   font-family: "Syne";
   font-weight: 700;
   color: white;
@@ -355,3 +378,4 @@ footer nav ul {
   justify-content: flex-end;
   margin: 3em;
 }
+
