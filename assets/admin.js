@@ -23,7 +23,7 @@ export function logout() {
         navItem.addEventListener('click', logout);
         // ajout du bouton modifier et texte
         const editSpan = document.createElement('span');
-        editSpan.innerHTML = '<button id="openModalBtn"> <i class="fa-regular fa-pen-to-square"></i> modifier</button>';
+        editSpan.innerHTML = '<a class="edit-icon" href="#modal"> <i class="fa-regular fa-pen-to-square"></i> modifier</a>';
         editSpan.classList.add('edit-icon');
         h2.insertAdjacentElement('afterend', editSpan);
         filtresDiv.style.display = 'none';
