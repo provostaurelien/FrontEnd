@@ -15,6 +15,7 @@ export function logout() {
     const h2 = document.querySelector('#portfolio h2');
     var filtresDiv = document.querySelector('.filtres');
   
+    
     if (navItem) {
       if (userDataString) {
         // Si l'utilisateur est connecté, remplacer "login" par "logout"

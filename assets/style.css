@@ -470,6 +470,46 @@ button.active {
 
 
 /* spécificité de la page d'accueil */
+.modal-accueil {
+  margin : 0px 10%;
+}
+
+.modal-accueil .gallery-modal {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* 5 colonnes */
+  gap: 2%;
+}
+
+.modal-accueil .gallery-modal img {
+  width: 100%; 
+  height: auto; 
+  object-fit: cover; /* Assure que l'image couvre l'espace de son conteneur sans se déformer */
+}
+
+/* Gestion des photos avec position de la poubelle */
+
+figure {
+  position: relative; /* Positionne le conteneur par rapport à ses enfants */
+  display: inline-block; /* Affiche le conteneur en ligne avec d'autres éléments */
+}
+
+figure img {
+  display: block; /* Pour éviter les espaces blancs sous les images */
+  width: 100%; /* Ajustez la taille de l'image si nécessaire */
+  height: auto; 
+  object-fit: cover;/* Maintient les proportions de l'image */
+}
+
+.trash-icon {
+  position: absolute; /* Positionne l'icône de manière absolue par rapport au conteneur */
+  top: 5px; /* Ajustez la distance du haut si nécessaire */
+  right: 5px; /* Ajustez la distance de la droite si nécessaire */
+  cursor: pointer; /* Change le curseur pour indiquer que c'est cliquable */
+  color: white ; /* Change la couleur de l'icône si besoin */
+  background-color: black;
+  font-size: 10px; /* Ajustez la taille de l'icône */
+  padding: 5px;
+}
 
 
 .modal-accueil .separator {

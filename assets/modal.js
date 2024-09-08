@@ -59,3 +59,79 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 });
+
+
+// Gestion de l'affichage des images dans la galerie photo 
+
+async function RecuperationImagesModal() {
+  try {
+    // Récupération via l'API
+    const response = await fetch(`http://localhost:5678/api/works`);
+    const images = await response.json();
+    return images; // Ne fait que retourner les images
+  } catch (error) {
+    console.error("Erreur lors de la récupération des données :", error);
+  }
+}
+
+ // fonction pour afficher les fonctions dans le DOM 
+function afficherImages(images) {
+  // Définition de l'emplacement
+  const container = document.querySelector(".gallery-modal");
+  images.forEach((image) => {
+    const fig = document.createElement("figure");
+    const imgelement = document.createElement("img");
+    imgelement.src = image.imageUrl;
+    imgelement.alt = image.title;
+    imgelement.id = image.id;
+    imgelement.className = image.category.name;
+    const trashIcon = document.createElement('i');
+    trashIcon.classList.add('fa-solid', 'fa-trash-can', 'trash-icon');
+
+        // Ajouter un événement de clic sur l'icône de la corbeille
+        trashIcon.addEventListener('click', async function () {
+          // Confirmation avant suppression (facultatif)
+            try {
+              // Envoyer une requête DELETE à l'API avec l'ID de l'image
+              const response = await fetch(`http://localhost:5678/api/works/${image.id}`, {
+                method: 'DELETE',
+              });
+    
+              // Vérifier si la suppression est réussie
+              if (response.ok) {
+                // Supprimer l'élément figure du DOM
+                fig.remove();
+                console.log(`Image avec ID ${image.id} supprimée avec succès.`);
+              } else {
+                console.error("Erreur lors de la suppression de l'image :", response.statusText);
+              }
+            } catch (error) {
+              console.error("Erreur lors de la requête DELETE :", error);
+            }
+          
+        });
+
+        
+// Placement dans le DOM dans les emplacements définis
+    fig.appendChild(imgelement);
+    fig.appendChild(trashIcon);
+    container.appendChild(fig);
+  });
+}
+
+//Appel des fonctions créées ci dessus en simulatanés
+
+async function afficherImagesModal() {
+  const images = await RecuperationImagesModal();
+  if (images) {
+    afficherImages(images);
+  }
+}
+
+// Appel de la fonction
+console.log (localStorage.getItem('userData'))
+afficherImagesModal();
+
+// Supression des images du dom
+
+
