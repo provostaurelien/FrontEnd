@@ -6,6 +6,7 @@ async function RecuperationImages() {
     const images = await response.json();
 
     const container = document.querySelector(".gallery");
+    container.innerHTML = ""; // Vide le contenu existant pour éviter les doublons lors du closeModal
 
     for (let i = 0; i < images.length; i++) {
       const fig = document.createElement("figure");
@@ -79,7 +80,7 @@ function gererCliqueBouton(button, images, categorie) {
   });
 }
 
-async function filtre() {
+export async function filtre() {
   const images = await RecuperationImages();
 
   const btnObjets = document.querySelector(".Objets");
@@ -95,5 +96,4 @@ async function filtre() {
 }
 
 // Appel des fonctions
-RecuperationImages();
 filtre();

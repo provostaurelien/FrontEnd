@@ -1,3 +1,5 @@
+import { filtre } from './index.js'; 
+
 document.addEventListener('DOMContentLoaded', function () {
     // Sélectionne l'élément de la modale et le lien d'ouverture
     const modal = document.getElementById('modal');
@@ -32,10 +34,13 @@ document.addEventListener('DOMContentLoaded', function () {
     modalwindow.classList.remove('visible')
     modalaccueil.classList.remove('visible')
     modalajoutphoto.classList.remove('visible')
+    //appel de la fonction filtre pour actualiser les images ajoutées ou supprimées :
+    filtre();
   }
 
-  // Ajoute l'événement de clic pour ouvrir la modale
-    openModalLink.addEventListener('click', openModal);
+  // Ajoute l'événement de clic pour ouvrir la modale, if réajouter pour éviter erreur d'existence hors mode admin
+  if (openModalLink){
+    openModalLink.addEventListener('click', openModal); }
   
 
   // Ajoute l'événement pour accéder au formulaire d'ajout photo
@@ -50,7 +55,7 @@ document.addEventListener('DOMContentLoaded', function () {
   // Ajoute l'événement de clic pour fermer la modale (sur la croix de fermeture)
   closeModalIcons.forEach(icon => {
     icon.addEventListener('click', closeModal);
-  });
+  }); 
 
   // Ferme la modale en cliquant en dehors de la fenêtre modale
   modal.addEventListener('click', function (event) {
@@ -59,6 +64,7 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 });
+
 
 
 // Gestion de l'affichage des images dans la galerie photo 
@@ -74,7 +80,14 @@ async function RecuperationImagesModal() {
   }
 }
 
- // fonction pour afficher les fonctions dans le DOM 
+
+
+
+
+
+
+
+ // fonction pour afficher les fonctions dans le DOM et suppression des images
 function afficherImages(images) {
   // Définition de l'emplacement
   const container = document.querySelector(".gallery-modal");
@@ -89,12 +102,22 @@ function afficherImages(images) {
     trashIcon.classList.add('fa-solid', 'fa-trash-can', 'trash-icon');
 
         // Ajouter un événement de clic sur l'icône de la corbeille
-        trashIcon.addEventListener('click', async function () {
+        trashIcon.addEventListener('click', async function () { 
           // Confirmation avant suppression (facultatif)
             try {
-              // Envoyer une requête DELETE à l'API avec l'ID de l'image
+              // Récupération des données stockées dans localStorage
+      const userData = JSON.parse(localStorage.getItem('userData'));
+              // Extraction du token depuis les données récupérées
+      const token = userData?.token;
+      console.log(token)
+         // Envoyer une requête DELETE à l'API avec l'ID de l'image
               const response = await fetch(`http://localhost:5678/api/works/${image.id}`, {
                 method: 'DELETE',
+          // Ajout du token dans le header
+                headers: {
+                  "Content-Type": "application/json",
+                  "Authorization": `Bearer ${token}`
+              },
               });
     
               // Vérifier si la suppression est réussie
