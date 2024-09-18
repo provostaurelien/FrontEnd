@@ -229,6 +229,10 @@ li:hover {
   text-decoration: none;
   color: #000000;
 }
+/* Garde la couleur appliquée au survol */
+.appBar_navItem:hover {
+  color: #b1663c; 
+}
 
 .appBar_navItem.active {
   font-weight: 600;
@@ -305,6 +309,17 @@ li:hover {
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
 }
 
+#contact input[type="submit"] {
+  font-family: "Syne";
+  font-weight: 700;
+  color: white;
+  background-color: #1d6154;
+  margin: 2em auto;
+  width: 180px;
+  text-align: center;
+  border-radius: 60px;
+}
+
 #logIn {
   width: 50%;
   margin: auto;
@@ -346,8 +361,9 @@ li:hover {
   width: 180px;
   text-align: center;
   border-radius: 60px;
-  padding: 10px 49px;
 }
+
+
 
 .filtres button {
   font-family: "Syne";
@@ -559,14 +575,25 @@ figure img {
 .modal-ajout-photo .photo-label {
   display: flex;
   flex-direction: column;
+  width: 450px;  /* Largeur maximale du cadre */
+  height: 200px;
   align-items: center;
   text-align: center;
   cursor: pointer;
+  margin: 0px;
+}
+/*Gestion de l'image uploadé pour éviter la modification du cadre*/
+
+.photo-label img {
+  max-width: 100%;  /* Limite la largeur de l'image à la taille du cadre */
+  max-height: 100%; /* Limite la hauteur de l'image à la taille du cadre */
+  object-fit: cover; 
 }
 
 .modal-ajout-photo .fa-image {
   color: #B9C5CC;
   font-size: 76px;
+  margin-top: 28px;
 }
 
 .modal-ajout-photo span {
@@ -583,7 +610,7 @@ figure img {
   margin: 10px 0px;
 }
 
-.modal-ajout-photo .photo-upload p {
+.modal-ajout-photo .photo-upload  {
   font-family: Work Sans;
   font-size: 12px;
   color: #888; /* Couleur grise pour le texte */
@@ -596,6 +623,8 @@ figure img {
   font-size: 1.2em;
   border: none;
   box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+  padding: 0px 10px;
+  color: #444444;
 }
 .modal-ajout-photo label {
   font-size: 14px; 
@@ -616,6 +645,7 @@ figure img {
 
 /* Gestion du bouton de validation */
 
+
 .modal-ajout-photo input[type="submit"]  {
   font-family: "Syne";
   font-weight: 700;
@@ -628,10 +658,13 @@ figure img {
   padding: 10px 49px;
 }
 
-/* préparation pour les calsses ajoutées par le code js */
-.modal-ajout-photo .active input[type="submit"]  {
+/* Passage du bouton en vert quand les champ sont complets */
+
+.modal-ajout-photo input.complete {
   background-color: #1d6154;
 }
+
+
 
 
 
