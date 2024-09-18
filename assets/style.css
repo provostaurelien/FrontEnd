@@ -177,7 +177,6 @@ h3 {
   color: black;
 }
 
-
 nav ul {
   display: flex;
   align-items: center;
@@ -191,9 +190,6 @@ nav li {
 li:hover {
   color: #b1663c;
 }
-
-
-
 
 #introduction {
   display: flex;
@@ -231,7 +227,7 @@ li:hover {
 }
 /* Garde la couleur appliquée au survol */
 .appBar_navItem:hover {
-  color: #b1663c; 
+  color: #b1663c;
 }
 
 .appBar_navItem.active {
@@ -257,7 +253,7 @@ li:hover {
   width: 100%;
 }
 
- /* style du <a> permettant l'ouverture de la modale */ 
+/* style du <a> permettant l'ouverture de la modale */
 
 .edit-icon {
   text-align: center;
@@ -265,18 +261,18 @@ li:hover {
   font-family: Work Sans;
   font-size: 14px;
   font-weight: 400;
-  margin-left: 10px; 
+  margin-left: 10px;
   text-decoration: none; /* Enlève le soulignement du lien */
   color: inherit;
 }
-/* ajuste l'espacement entre l'icone et le texte */ 
+/* ajuste l'espacement entre l'icone et le texte */
 .edit-icon i {
-  margin-right: 8px; 
+  margin-right: 8px;
 }
 
 .mesProjets {
-  display :flex;
-  justify-content:center;
+  display: flex;
+  justify-content: center;
 }
 #contact {
   width: 50%;
@@ -363,8 +359,6 @@ li:hover {
   border-radius: 60px;
 }
 
-
-
 .filtres button {
   font-family: "Syne";
   font-weight: 700;
@@ -400,17 +394,12 @@ button.active {
   padding: 10px 49px;
 }
 
-
-
 #logIn p {
   margin-top: 20px;
   color: red;
 }
 
-
-
 /* Gestion de la modale */
-
 
 /* gestion de l'arrière plan de la modale */
 .modal {
@@ -432,23 +421,21 @@ button.active {
   width: 40%;
   height: 95%;
   /* Permet de placer la croix de fermeture et la flèche  correctement*/
-  position: relative; 
+  position: relative;
 }
 
-.modal button{
-    font-family: "Syne";
-    font-size: 14px;
-    font-weight: 700;
-    padding: 10px 49px;
-    color: white;
-    background-color: #1d6154;
-    border: 2px solid;
-    border-color: #1d6154;
-    border-radius: 60px;
-    text-align: center;
-  }
-
-
+.modal button {
+  font-family: "Syne";
+  font-size: 14px;
+  font-weight: 700;
+  padding: 10px 49px;
+  color: white;
+  background-color: #1d6154;
+  border: 2px solid;
+  border-color: #1d6154;
+  border-radius: 60px;
+  text-align: center;
+}
 
 .modal .fa-xmark {
   position: absolute;
@@ -476,7 +463,8 @@ button.active {
   margin: 40px auto; /* Centre le trait horizontalement et ajoute de l'espace autour */
 }
 
-.modal-accueil, .modal-ajout-photo {
+.modal-accueil,
+.modal-ajout-photo {
   display: none;
   flex-direction: column;
   padding: 20px;
@@ -484,10 +472,9 @@ button.active {
   overflow-y: auto;
 }
 
-
 /* spécificité de la page d'accueil */
 .modal-accueil {
-  margin : 0px 10%;
+  margin: 0px 10%;
 }
 
 .modal-accueil .gallery-modal {
@@ -497,8 +484,8 @@ button.active {
 }
 
 .modal-accueil .gallery-modal img {
-  width: 100%; 
-  height: auto; 
+  width: 100%;
+  height: auto;
   object-fit: cover; /* Assure que l'image couvre l'espace de son conteneur sans se déformer */
 }
 
@@ -512,8 +499,8 @@ figure {
 figure img {
   display: block; /* Pour éviter les espaces blancs sous les images */
   width: 100%; /* Ajustez la taille de l'image si nécessaire */
-  height: auto; 
-  object-fit: cover;/* Maintient les proportions de l'image */
+  height: auto;
+  object-fit: cover; /* Maintient les proportions de l'image */
 }
 
 .trash-icon {
@@ -521,15 +508,14 @@ figure img {
   top: 5px; /* Ajustez la distance du haut si nécessaire */
   right: 5px; /* Ajustez la distance de la droite si nécessaire */
   cursor: pointer; /* Change le curseur pour indiquer que c'est cliquable */
-  color: white ; /* Change la couleur de l'icône si besoin */
+  color: white; /* Change la couleur de l'icône si besoin */
   background-color: black;
   font-size: 10px; /* Ajustez la taille de l'icône */
   padding: 5px;
 }
 
-
 .modal-accueil .separator {
-  width: 80%; 
+  width: 80%;
 }
 
 /* definition du positionnement du bouton d'ajout photo */
@@ -538,9 +524,7 @@ figure img {
   align-self: center;
 }
 
-
 /* spécificité de la page d'ajout de photo */
-
 
 /* position de la flèche retour */
 
@@ -555,11 +539,10 @@ figure img {
 /* definition du formulaire et de son contenu */
 .modal-ajout-photo form {
   text-align: left;
-  margin : 0px 10%;
+  margin: 0px 10%;
   display: flex;
   flex-direction: column;
 }
-
 
 /* Gestion du cadre */
 
@@ -567,15 +550,13 @@ figure img {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #E8F1F6; 
+  background-color: #e8f1f6;
 }
-
-
 
 .modal-ajout-photo .photo-label {
   display: flex;
   flex-direction: column;
-  width: 450px;  /* Largeur maximale du cadre */
+  width: 450px; /* Largeur maximale du cadre */
   height: 200px;
   align-items: center;
   text-align: center;
@@ -585,19 +566,19 @@ figure img {
 /*Gestion de l'image uploadé pour éviter la modification du cadre*/
 
 .photo-label img {
-  max-width: 100%;  /* Limite la largeur de l'image à la taille du cadre */
+  max-width: 100%; /* Limite la largeur de l'image à la taille du cadre */
   max-height: 100%; /* Limite la hauteur de l'image à la taille du cadre */
-  object-fit: cover; 
+  object-fit: cover;
 }
 
 .modal-ajout-photo .fa-image {
-  color: #B9C5CC;
+  color: #b9c5cc;
   font-size: 76px;
   margin-top: 28px;
 }
 
 .modal-ajout-photo span {
-  background-color: #CBD6DC;
+  background-color: #cbd6dc;
   color: white;
   align-self: center;
   width: 60%;
@@ -610,7 +591,7 @@ figure img {
   margin: 10px 0px;
 }
 
-.modal-ajout-photo .photo-upload  {
+.modal-ajout-photo .photo-upload {
   font-family: Work Sans;
   font-size: 12px;
   color: #888; /* Couleur grise pour le texte */
@@ -618,7 +599,8 @@ figure img {
 
 /*Gestion des champs*/
 
-.modal-ajout-photo input,.modal-ajout-photo select  {
+.modal-ajout-photo input,
+.modal-ajout-photo select {
   height: 50px;
   font-size: 1.2em;
   border: none;
@@ -627,8 +609,8 @@ figure img {
   color: #444444;
 }
 .modal-ajout-photo label {
-  font-size: 14px; 
-  font-family: Work Sans; 
+  font-size: 14px;
+  font-family: Work Sans;
   font-weight: 500;
   margin: 2em 0 1em 0;
 }
@@ -645,11 +627,10 @@ figure img {
 
 /* Gestion du bouton de validation */
 
-
-.modal-ajout-photo input[type="submit"]  {
+.modal-ajout-photo input[type="submit"] {
   font-family: "Syne";
   font-weight: 700;
-  background-color: #A7A7A7;
+  background-color: #a7a7a7;
   color: white;
   align-self: center;
   width: 60%;
@@ -664,17 +645,11 @@ figure img {
   background-color: #1d6154;
 }
 
-
-
-
-
 /* Gestion de la visibilité de la modale par le code js */
 
 .visible {
   display: flex;
 }
-
-
 
 /* Gestion du footer */
 
@@ -683,4 +658,3 @@ footer nav ul {
   justify-content: flex-end;
   margin: 3em;
 }
-
