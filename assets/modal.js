@@ -1,5 +1,16 @@
 import { filtre } from "./index.js";
 
+  // Fonction pour fermer la modale
+  function closeModal() {
+    // Retire la classe pour masquer la modale
+    modal.classList.remove("visible");
+    modalwindow.classList.remove("visible");
+    modalaccueil.classList.remove("visible");
+    modalajoutphoto.classList.remove("visible");
+    //appel de la fonction filtre pour actualiser les images ajoutées ou supprimées :
+    filtre();
+  }
+
 document.addEventListener("DOMContentLoaded", function () {
   // Sélectionne l'élément de la modale et le lien d'ouverture
   const modal = document.getElementById("modal");
@@ -26,16 +37,7 @@ document.addEventListener("DOMContentLoaded", function () {
     modalajoutphoto.classList.add("visible"); // Ajoute la classe pour visualisation du formulaire
   }
 
-  // Fonction pour fermer la modale
-  function closeModal() {
-    // Retire la classe pour masquer la modale
-    modal.classList.remove("visible");
-    modalwindow.classList.remove("visible");
-    modalaccueil.classList.remove("visible");
-    modalajoutphoto.classList.remove("visible");
-    //appel de la fonction filtre pour actualiser les images ajoutées ou supprimées :
-    filtre();
-  }
+
 
   // Ajoute l'événement de clic pour ouvrir la modale, if réajouter pour éviter erreur d'existence hors mode admin
   if (openModalLink) {
@@ -220,12 +222,14 @@ function verifierFormulaireComplet() {
 
 // Ajout de la classe .complete pour le bouton Valider si le formulaire est complet
 function gererBoutonValider() {
+  const erreurDiv = document.getElementById('erreur-formulaire');
   const boutonValider = document.querySelector(
     '.modal-ajout-photo input[type="submit"]'
   );
 
   if (verifierFormulaireComplet()) {
     boutonValider.classList.add("complete");
+    erreurDiv.innerHTML = '';
   } else {
     boutonValider.classList.remove("complete");
   }
@@ -233,8 +237,19 @@ function gererBoutonValider() {
 
 // Gestion des erreurs lors de la soumission si des champs sont vides, fonction alerte à revoir
 function afficherErreurFormulaire() {
+  const erreurDiv2 = document.getElementById('erreur-formulaire');
+  
+  // Réinitialiser le message d'erreur à chaque soumission
+  erreurDiv2.innerHTML = '';
+
   if (!verifierFormulaireComplet()) {
-    alert("Veuillez remplir tous les champs avant de soumettre.");
+     // Créer le message d'erreur et l'ajouter au DOM
+    const messageErreur = document.createElement('p');
+    messageErreur.textContent = "Veuillez remplir tous les champs avant de soumettre.";
+    messageErreur.style.color = 'red'; // Optionnel si vous voulez spécifier la couleur ici aussi
+
+    // Ajouter le message d'erreur sous la catégorie
+    erreurDiv2.appendChild(messageErreur);
   }
 }
 
@@ -280,7 +295,7 @@ async function envoyerFormulaire(event) {
     });
 
     if (response.status === 201) {
-      alert("Ajout réussi");
+      
       // Insérer la nouvelle image dans le DOM (par exemple dans la galerie)
       afficherImagesModal(); // Recharger les images après ajout
       // Vider le contenu du formulaire après la soumission réussie
@@ -307,6 +322,8 @@ async function envoyerFormulaire(event) {
 
       // Désactiver le bouton si le formulaire est vide après la réinitialisation
       boutonValider.classList.remove("complete");
+      // Appel de la fonction pour fermer la modale 
+      closeModal();
     } else {
       console.error("Erreur lors de l'ajout :", response.statusText);
     }

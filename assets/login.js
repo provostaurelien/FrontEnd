@@ -10,6 +10,27 @@ async function envoiLogin() {
       console.log("mail:", mail);
       console.log("Mot de passe:", password);
 
+      // Vérification de l'adresse e-mail avec regex
+      const emailRegex = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i;
+
+          // Supprimer le message d'erreur précédent s'il existe
+          const errorElement = document.getElementById("errorMail");
+          if (errorElement) {
+            errorElement.remove();
+          }
+    
+          if (!emailRegex.test(mail)) {
+            const container = document.getElementById("mail");
+            const errorConnexion = document.createElement("p");
+            errorConnexion.id = "errorMail"; // Attribuer un id au message d'erreur
+            errorConnexion.textContent = "Veuillez entrer une adresse e-mail valide.";
+            errorConnexion.style.color = "red"; // Changer la couleur du texte en rouge
+    
+            // Insérer le message après le champ e-mail
+            container.insertAdjacentElement("afterend", errorConnexion);
+            return; // Empêche la suite de l'exécution si l'e-mail est invalide
+          }
+
       try {
         const response = await fetch(`http://localhost:5678/api/users/login`, {
           method: "POST",
