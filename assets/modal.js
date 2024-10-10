@@ -1,26 +1,51 @@
 import { filtre } from "./index.js";
 
-  // Fonction pour fermer la modale
-  function closeModal() {
-    // Retire la classe pour masquer la modale
-    modal.classList.remove("visible");
-    modalwindow.classList.remove("visible");
-    modalaccueil.classList.remove("visible");
-    modalajoutphoto.classList.remove("visible");
-    //appel de la fonction filtre pour actualiser les images ajoutées ou supprimées :
-    filtre();
-  }
 
-document.addEventListener("DOMContentLoaded", function () {
-  // Sélectionne l'élément de la modale et le lien d'ouverture
+
+  // Fonction de récupération des données du cookies
+
+  function getCookie(name) {
+    const decodedCookie = decodeURIComponent(document.cookie); // Décode les cookies
+    const cookieArray = decodedCookie.split(';'); // Sépare les différents cookies
+    for (let i = 0; i < cookieArray.length; i++) {
+        let cookie = cookieArray[i].trim(); // Supprime les espaces au début de chaque cookie
+        if (cookie.indexOf(name + "=") === 0) {
+            return cookie.substring(name.length + 1); // Retourne la valeur du cookie
+        }
+    }
+    return null; // Retourne null si le cookie n'existe pas
+}
+
+//Définition des constantes globales
+  const userDataCookie = getCookie("userData");
+  const userData = JSON.parse(userDataCookie);  
   const modal = document.getElementById("modal");
   const modalwindow = document.querySelector(".modal-window");
   const modalaccueil = document.querySelector(".modal-accueil");
   const modalajoutphoto = document.querySelector(".modal-ajout-photo");
+
+
+
+  // Fonction pour fermer la modale
+      function closeModal() {
+        // Retire la classe pour masquer la modale
+        modal.classList.remove("visible");
+        modalwindow.classList.remove("visible");
+        modalaccueil.classList.remove("visible");
+        modalajoutphoto.classList.remove("visible");
+        //appel de la fonction filtre pour actualiser les images ajoutées ou supprimées :
+        filtre();
+      }
+
+
+document.addEventListener("DOMContentLoaded", function () {
+  // Sélectionne l'élément de la modale et le lien d'ouverture
   const openModalLink = document.querySelector('a[href="#modal"]');
   const closeModalIcons = modal.querySelectorAll(".fa-xmark");
   const btnajoutphoto = document.querySelector(".ajoutPhoto");
   const flecheretour = document.querySelector(".fa-arrow-left");
+
+
 
   // Fonction pour ouvrir la modale ou revenir à la page d'accueil de la modale
   function openModal(event) {
@@ -99,9 +124,7 @@ function afficherImages(images) {
     trashIcon.addEventListener("click", async function () {
       // Confirmation avant suppression (facultatif)
       try {
-        // Récupération des données stockées dans localStorage
-        const userData = JSON.parse(localStorage.getItem("userData"));
-        // Extraction du token depuis les données récupérées
+    // Récupération des données stockées dans le cookie pour créer le header de l'appel api
         const token = userData?.token;
         console.log(token);
         // Envoyer une requête DELETE à l'API avec l'ID de l'image
@@ -150,7 +173,6 @@ async function afficherImagesModal() {
 }
 
 // Appel de la fonction
-console.log(localStorage.getItem("userData"));
 afficherImagesModal();
 
 //  code formulaire modal page 2
@@ -282,9 +304,9 @@ async function envoyerFormulaire(event) {
   });
 
   try {
-    // Récupération des données stockées dans localStorage
-    const userData2 = JSON.parse(localStorage.getItem("userData"));
-    const token2 = userData2?.token;
+    // Récupération des données stockées dans le cookie pour créer le header de l'appel api
+
+    const token2 = userData?.token;
 
     const response = await fetch("http://localhost:5678/api/works", {
       method: "POST",

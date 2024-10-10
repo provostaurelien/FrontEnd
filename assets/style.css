@@ -253,7 +253,7 @@ li:hover {
   width: 100%;
 }
 
-/* style du <a> permettant l'ouverture de la modale */
+/* style du <a> permettant l'ouverture de la modale injecter par le code js */
 
 .edit-icon {
   text-align: center;
@@ -274,6 +274,42 @@ li:hover {
   display: flex;
   justify-content: center;
 }
+
+.filtres button {
+  font-family: "Syne";
+  font-weight: 700;
+  color: #1d6154;
+  border: 2px solid;
+  border-color: #1d6154;
+  border-radius: 60px;
+  background-color: white;
+  text-align: center;
+  padding: 9px 20px;
+}
+
+.filtres button:hover {
+  font-family: "Syne";
+  font-weight: 700;
+  color: white;
+  background-color: #1d6154;
+  border: 2px solid;
+  border-color: #1d6154;
+  border-radius: 60px;
+  text-align: center;
+}
+
+button.active {
+  font-family: "Syne";
+  font-weight: 700;
+  color: white;
+  background-color: #1d6154;
+  border: 2px solid;
+  border-color: #1d6154;
+  border-radius: 60px;
+  text-align: center;
+  padding: 10px 49px;
+}
+
 #contact {
   width: 50%;
   margin: auto;
@@ -316,88 +352,21 @@ li:hover {
   border-radius: 60px;
 }
 
-#logIn {
-  width: 50%;
-  margin: auto;
-}
-#logIn > * {
-  text-align: center;
-}
-#logIn h2 {
-  margin-bottom: 20px;
-}
-#logIn form {
-  text-align: left;
-  margin-top: 30px;
+
+
+/* Gestion du footer */
+
+footer nav ul {
   display: flex;
-  flex-direction: column;
+  justify-content: flex-end;
+  margin: 3em;
 }
 
-#logIn input {
-  height: 50px;
-  font-size: 1.2em;
-  border: none;
-  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
-}
-#logIn label {
-  margin: 2em 0 1em 0;
-}
 
-#logIn a {
-  display: flex;
-  flex-direction: column;
-}
 
-#logIn input[type="submit"] {
-  font-family: "Syne";
-  font-weight: 700;
-  color: white;
-  background-color: #1d6154;
-  margin: 2em auto;
-  width: 180px;
-  text-align: center;
-  border-radius: 60px;
-}
 
-.filtres button {
-  font-family: "Syne";
-  font-weight: 700;
-  color: #1d6154;
-  border: 2px solid;
-  border-color: #1d6154;
-  border-radius: 60px;
-  background-color: white;
-  text-align: center;
-  padding: 9px 20px;
-}
 
-.filtres button:hover {
-  font-family: "Syne";
-  font-weight: 700;
-  color: white;
-  background-color: #1d6154;
-  border: 2px solid;
-  border-color: #1d6154;
-  border-radius: 60px;
-  text-align: center;
-}
 
-button.active {
-  font-family: "Syne";
-  font-weight: 700;
-  color: white;
-  background-color: #1d6154;
-  border: 2px solid;
-  border-color: #1d6154;
-  border-radius: 60px;
-  text-align: center;
-  padding: 10px 49px;
-}
-
-#logIn p {
-  margin-top: 20px;
-  color: red;
-}
 
 /* Gestion de la modale */
 
@@ -419,7 +388,6 @@ button.active {
   background-color: white;
   border-radius: 10px;
   width: 40%;
-  height: 95%;
   /* Permet de placer la croix de fermeture et la flèche  correctement*/
   position: relative;
 }
@@ -450,12 +418,7 @@ button.active {
   text-align: center;
 }
 
-.modal .gallery-modal {
-  flex: 1; /* Prend l'espace restant pour centrer le titre et garder le bouton en bas */
-  display: grid;
-  grid-template-columns: repeat(5, 1fr); /* Ajustez en fonction de vos images */
-  gap: 10px; /* Ajuste l'espacement entre les images */
-}
+
 /* définition du trait au dessus du bouton */
 .separator {
   height: 2px; /* Épaisseur du trait */
@@ -478,9 +441,12 @@ button.active {
 }
 
 .modal-accueil .gallery-modal {
+  flex: 1; /* Prend l'espace restant pour centrer le titre et garder le bouton en bas */
   display: grid;
   grid-template-columns: repeat(5, 1fr); /* 5 colonnes */
-  gap: 2%;
+  grid-column-gap : 2%;
+  grid-row-gap: 15%;/*Espace entre les lignes de photo de la modale*/
+
 }
 
 .modal-accueil .gallery-modal img {
@@ -597,6 +563,9 @@ figure img {
   color: #888; /* Couleur grise pour le texte */
 }
 
+#erreur-formulaire {
+  color: red;
+}
 /*Gestion des champs*/
 
 .modal-ajout-photo input,
@@ -651,13 +620,52 @@ figure img {
   display: flex;
 }
 
-/* Gestion du footer */
+/* Gestion de la page Login*/
 
-footer nav ul {
-  display: flex;
-  justify-content: flex-end;
-  margin: 3em;
+#logIn {
+  width: 50%;
+  margin: auto;
 }
-#erreur-formulaire {
+#logIn > * {
+  text-align: center;
+}
+#logIn h2 {
+  margin-bottom: 20px;
+}
+#logIn form {
+  text-align: left;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+#logIn input {
+  height: 50px;
+  font-size: 1.2em;
+  border: none;
+  box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+}
+#logIn label {
+  margin: 2em 0 1em 0;
+}
+
+#logIn a {
+  display: flex;
+  flex-direction: column;
+}
+
+#logIn input[type="submit"] {
+  font-family: "Syne";
+  font-weight: 700;
+  color: white;
+  background-color: #1d6154;
+  margin: 2em auto;
+  width: 180px;
+  text-align: center;
+  border-radius: 60px;
+}
+
+#logIn p {
+  margin-top: 20px;
   color: red;
 }

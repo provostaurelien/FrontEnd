@@ -12,9 +12,9 @@
     >
     <meta name="description" content="" >
     <link rel="stylesheet" href="./assets/style.css" >
-    <script type="module" src="./assets/admin.js"></script>
-    <script type="module" src="./assets/index.js"></script>
-    <script type="module" src="./assets/modal.js"></script>
+    <script type="module" src="./assets/admin.js" defer></script>
+    <script type="module" src="./assets/index.js" defer></script>
+    <script type="module" src="./assets/modal.js" defer></script>
     <!--  font awesome utiliser pour les icones sur la page-->
     <link
       rel="stylesheet"
@@ -39,7 +39,7 @@
       <!--  section gardé malgré le warning w3c pour le web sémantique-->
       <section id="introduction">
         <figure>
-          <img src="./assets/images/sophie-bluel.png" alt="" >
+          <img src="./assets/images/sophie-bluel.png" alt="image de Sophie Bluel" >
         </figure>
         <article>
           <h2>Designer d'espace</h2>
@@ -66,12 +66,10 @@
         </div>
         <!--ajout des boutons filtres sur la page, disparition en mode admin -->
         <div class="filtres">
-          <button class="btn Tous" type="button">Tous</button>
+          <button class="btn Tous active" type="button" >Tous</button>
           <button class="btn Objets" type="button">Objets</button>
           <button class="btn Appartements" type="button">Appartements</button>
-          <button class="btn HotelsRestaurants" type="button">
-            Hotels & restaurants
-          </button>
+          <button class="btn HotelsRestaurants" type="button">Hotels & restaurants </button>
         </div>
         <div class="gallery"></div>
       </section>

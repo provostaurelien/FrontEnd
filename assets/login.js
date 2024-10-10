@@ -1,3 +1,13 @@
+// Fonction pour créer le cookie
+function setCookie(name, value, days) {
+  const date = new Date();
+  date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000)); // définir la durée en jours
+  const expires = "expires=" + date.toUTCString();
+  document.cookie = name + "=" + value + ";" + expires + ";path=/";
+}
+
+
+
 async function envoiLogin() {
   document
     .getElementById("loginForm")
@@ -18,17 +28,27 @@ async function envoiLogin() {
           if (errorElement) {
             errorElement.remove();
           }
-    
+    // Vérification du champ mail avant envoi API
           if (!emailRegex.test(mail)) {
             const container = document.getElementById("mail");
-            const errorConnexion = document.createElement("p");
-            errorConnexion.id = "errorMail"; // Attribuer un id au message d'erreur
-            errorConnexion.textContent = "Veuillez entrer une adresse e-mail valide.";
-            errorConnexion.style.color = "red"; // Changer la couleur du texte en rouge
-    
+            const errorMail = document.createElement("p");
+            errorMail.id = "errorMail"; // Attribuer un id au message d'erreur
+            errorMail.textContent = "Veuillez entrer une adresse e-mail valide.";
+            errorMail.style.color = "red"; // Changer la couleur du texte en rouge
             // Insérer le message après le champ e-mail
-            container.insertAdjacentElement("afterend", errorConnexion);
+            container.insertAdjacentElement("afterend", errorMail);
             return; // Empêche la suite de l'exécution si l'e-mail est invalide
+          }
+      // Vérification du champ password non vide avant l'envoi API
+          if (password  == "") {
+            const container = document.getElementById("password");
+            const errorPassword = document.createElement("p");
+            errorPassword.id = "errorPassword"; // Attribuer un id au message d'erreur
+            errorPassword.textContent = "Veuillez entrer un mot de passe.";
+            errorPassword.style.color = "red"; // Changer la couleur du texte en rouge
+            // Insérer le message après le champ password
+            container.insertAdjacentElement("afterend", errorPassword);
+            return; // Empêche la suite de l'exécution si le password est invalide
           }
 
       try {
@@ -47,7 +67,7 @@ async function envoiLogin() {
         if (response.ok) {
           const data = await response.json();
           // stocker la response dans le local storage
-          localStorage.setItem("userData", JSON.stringify(data));
+          setCookie("userData", JSON.stringify(data), 1);
           // Rediriger vers la page index
           window.location.href = "./index.html";
         } else {
