@@ -1,34 +1,75 @@
+import { recupererCategories } from './api.js';
+import { recupererImages } from './api.js';
 import { logout } from "./admin.js";
 
-async function RecuperationImages() {
+
+// fonction pour récupérer les filtres à partir de l'api et les afficher dans les boutons
+
+
+async function afficherCategories() {
   try {
-    const response = await fetch(`http://localhost:5678/api/works`);
-    const images = await response.json();
+    const categories = await recupererCategories();
+    
+    const buttonContainer = document.getElementById("filtre");
+    buttonContainer.innerHTML = '';
 
+    // Ajouter le bouton "Tous"
+    const boutonTous = document.createElement("button");
+    boutonTous.classList.add("btn", "Tous", "active");
+    boutonTous.type = "button";
+    boutonTous.textContent = "Tous";
+    buttonContainer.appendChild(boutonTous);
+
+    // Ajouter les boutons pour chaque catégorie
+    categories.forEach((category) => {
+      const bouton = document.createElement("button");
+      let className = category.name
+        .replace(/\s+/g, '-') // Remplacer les espaces par des tirets
+        .replace(/&/g, 'and'); // Remplacer les "&" par "and"
+
+      bouton.classList.add("btn", className);
+      bouton.type = "button";
+      bouton.textContent = category.name;
+      buttonContainer.appendChild(bouton);
+    });
+  } catch (error) {
+    console.error("Erreur lors de l'affichage des catégories :", error);
+  }
+}
+
+
+
+async function afficherImages() {
+  try {
+    const images = await recupererImages();
+    
     const container = document.querySelector(".gallery");
-    container.innerHTML = ""; // Vide le contenu existant pour éviter les doublons lors du closeModal
+    container.innerHTML = ""; // Vide le contenu existant
 
-    for (let i = 0; i < images.length; i++) {
+    images.forEach(image => {
       const fig = document.createElement("figure");
 
       const imgelement = document.createElement("img");
-      imgelement.src = images[i].imageUrl;
-      imgelement.alt = images[i].title;
-      imgelement.className = images[i].category.name;
+      imgelement.src = image.imageUrl;
+      imgelement.alt = image.title;
+      imgelement.className = image.category.name;
 
       const figcaption = document.createElement("figcaption");
-      figcaption.innerText = images[i].title;
+      figcaption.innerText = image.title;
 
       fig.appendChild(imgelement);
       fig.appendChild(figcaption);
       container.appendChild(fig);
-    }
+    });
 
-    return images; // Retourne les images
   } catch (error) {
-    console.error("Erreur lors de la récupération des données :", error);
+    console.error("Erreur lors de l'affichage des images :", error);
   }
 }
+
+
+
+
 
 // Fonction générique pour filtrer et afficher les images
 function afficherImagesFiltrees(images, categorie) {
@@ -81,11 +122,11 @@ function gererCliqueBouton(button, images, categorie) {
 }
 
 export async function filtre() {
-  const images = await RecuperationImages();
+  const images = await afficherImages();
 
   const btnObjets = document.querySelector(".Objets");
   const btnAppartements = document.querySelector(".Appartements");
-  const btnHotels = document.querySelector(".HotelsRestaurants");
+  const btnHotels = document.querySelector(".Hotels-and-restaurants");
   const btnTous = document.querySelector(".Tous");
 
   // Gérer les clics pour chaque bouton en appelant la fonction précéndente pour le button active
@@ -96,4 +137,5 @@ export async function filtre() {
 }
 
 // Appel des fonctions
+afficherCategories();
 filtre();

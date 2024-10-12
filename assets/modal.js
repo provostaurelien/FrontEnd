@@ -1,4 +1,6 @@
 import { filtre } from "./index.js";
+import { recupererCategories } from './api.js';
+import { recupererImages } from './api.js';
 
 
 
@@ -92,85 +94,68 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Gestion de l'affichage des images dans la galerie photo
 
-async function RecuperationImagesModal() {
+async function afficherImagesModal() {
   try {
-    // Récupération via l'API
-    const response = await fetch(`http://localhost:5678/api/works`);
-    const images = await response.json();
-    return images; // Ne fait que retourner les images
-  } catch (error) {
-    console.error("Erreur lors de la récupération des données :", error);
-  }
-}
+    const images = await recupererImages(); // Récupérer les images via l'API
 
-// fonction pour afficher les fonctions dans le DOM et suppression des images
-function afficherImages(images) {
-  // Définition de l'emplacement
-  const container = document.querySelector(".gallery-modal");
-  //Nettoyage du conteneur, pour éviter doublon à l'ajout d'une nouvelle image
-  container.innerHTML = "";
+    const containerModal = document.querySelector(".gallery-modal");
+    containerModal.innerHTML = ""; // Vide le contenu modal
 
-  images.forEach((image) => {
-    const fig = document.createElement("figure");
-    const imgelement = document.createElement("img");
-    imgelement.src = image.imageUrl;
-    imgelement.alt = image.title;
-    imgelement.id = image.id;
-    imgelement.className = image.category.name;
-    const trashIcon = document.createElement("i");
-    trashIcon.classList.add("fa-solid", "fa-trash-can", "trash-icon");
+    images.forEach(image => {
+      const fig = document.createElement("figure");
 
-    // Ajouter un événement de clic sur l'icône de la corbeille
-    trashIcon.addEventListener("click", async function () {
-      // Confirmation avant suppression (facultatif)
-      try {
-    // Récupération des données stockées dans le cookie pour créer le header de l'appel api
-        const token = userData?.token;
-        console.log(token);
-        // Envoyer une requête DELETE à l'API avec l'ID de l'image
-        const response = await fetch(
-          `http://localhost:5678/api/works/${image.id}`,
-          {
+      const imgelement = document.createElement("img");
+      imgelement.src = image.imageUrl;
+      imgelement.alt = image.title;
+
+      // Ajouter l'icône "trash"
+      const trashIcon = document.createElement("i");
+      trashIcon.classList.add("fa-solid", "fa-trash-can", "trash-icon");
+
+      // Ajouter un événement de clic sur l'icône "trash"
+      trashIcon.addEventListener("click", async function () {
+        try {
+          // Récupération du token utilisateur pour le header
+          const token = userData?.token;
+          console.log(token);
+          
+          // Suppression de l'image via API
+          const response = await fetch(`http://localhost:5678/api/works/${image.id}`, {
             method: "DELETE",
-            // Ajout du token dans le header
             headers: {
               "Content-Type": "application/json",
               Authorization: `Bearer ${token}`,
             },
-          }
-        );
+          });
 
-        // Vérifier si la suppression est réussie
-        if (response.ok) {
-          // Supprimer l'élément figure du DOM
-          fig.remove();
-          console.log(`Image avec ID ${image.id} supprimée avec succès.`);
-        } else {
-          console.error(
-            "Erreur lors de la suppression de l'image :",
-            response.statusText
-          );
+          // Si la suppression est réussie
+          if (response.ok) {
+            fig.remove(); // Retirer l'image du DOM
+            console.log(`Image avec ID ${image.id} supprimée avec succès.`);
+          } else {
+            console.error("Erreur lors de la suppression de l'image :", response.statusText);
+          }
+        } catch (error) {
+          console.error("Erreur lors de la requête DELETE :", error);
         }
-      } catch (error) {
-        console.error("Erreur lors de la requête DELETE :", error);
-      }
+      });
+
+      // Ajouter les éléments au DOM
+      fig.appendChild(imgelement);
+      fig.appendChild(trashIcon);
+      containerModal.appendChild(fig);
     });
 
-    // Placement dans le DOM dans les emplacements définis
-    fig.appendChild(imgelement);
-    fig.appendChild(trashIcon);
-    container.appendChild(fig);
-  });
-}
+    // Retourner les images pour réutilisation
+    return images;
 
-//Appel des fonctions créées ci dessus en simulatanés
-
-async function afficherImagesModal() {
-  const images = await RecuperationImagesModal();
-  if (images) {
-    afficherImages(images);
+  } catch (error) {
+    console.error("Erreur lors de l'affichage des images dans la modal :", error);
   }
 }
+
+
+
 
 // Appel de la fonction
 afficherImagesModal();
@@ -178,13 +163,12 @@ afficherImagesModal();
 //  code formulaire modal page 2
 
 // Récupération des catégories à partir de l'API et insertion dans le DOM
-async function recupererCategories() {
+async function afficherOptionsCategories() {
   try {
-    const response = await fetch("http://localhost:5678/api/categories");
-    const categories = await response.json();
-
+    const categories = await recupererCategories();
+    
     const selectCategorie = document.getElementById("categorie");
-
+    
     categories.forEach((category) => {
       const option = document.createElement("option");
       option.value = category.id;
@@ -192,9 +176,10 @@ async function recupererCategories() {
       selectCategorie.appendChild(option);
     });
   } catch (error) {
-    console.error("Erreur lors de la récupération des catégories :", error);
+    console.error("Erreur lors de l'affichage des options de catégories :", error);
   }
 }
+
 
 //Modification du div photo upload, suppression des éléments puis ajout de la photo chargée
 
@@ -356,7 +341,7 @@ async function envoyerFormulaire(event) {
 
 // Ajout des listeners
 document.addEventListener("DOMContentLoaded", function () {
-  recupererCategories();
+  afficherOptionsCategories();
 
   const photoInput = document.getElementById("photo-upload-input");
   const titreInput = document.getElementById("Titre");
