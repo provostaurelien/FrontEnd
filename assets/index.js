@@ -48,7 +48,6 @@ async function afficherImages() {
 
     images.forEach(image => {
       const fig = document.createElement("figure");
-
       const imgelement = document.createElement("img");
       imgelement.src = image.imageUrl;
       imgelement.alt = image.title;
@@ -61,6 +60,8 @@ async function afficherImages() {
       fig.appendChild(figcaption);
       container.appendChild(fig);
     });
+
+    return images;
 
   } catch (error) {
     console.error("Erreur lors de l'affichage des images :", error);

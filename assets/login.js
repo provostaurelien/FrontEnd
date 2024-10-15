@@ -17,8 +17,7 @@ async function envoiLogin() {
       const mail = document.getElementById("mail").value;
       const password = document.getElementById("password").value;
 
-      console.log("mail:", mail);
-      console.log("Mot de passe:", password);
+    
 
       // Vérification de l'adresse e-mail avec regex
       const emailRegex = /^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/i;

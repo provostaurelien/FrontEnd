@@ -29,7 +29,7 @@ export function logout() {
   
   // Initialiser le lien de navigation au chargement du DOM
   
-  document.addEventListener('DOMContentLoaded', function () {
+  
     // Vérifie si des données utilisateur existent dans le localStorage
     const userDataString = getCookie("userData");
     const navItem = document.querySelector('.appBar_navItem');
@@ -59,6 +59,5 @@ export function logout() {
         navItem.textContent = 'login';
         navItem.href = './login.html';
       }
-    }
-  });
+    };
 

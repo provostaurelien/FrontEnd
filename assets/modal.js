@@ -1,53 +1,51 @@
+// Import des fonctions issues des autres fichiers
+
 import { filtre } from "./index.js";
-import { recupererCategories } from './api.js';
-import { recupererImages } from './api.js';
+import { recupererCategories } from "./api.js";
+import { recupererImages } from "./api.js";
+import { supprimerImage } from "./api.js";
+import { ajouterImage } from './api.js';
 
+// Fonction de récupération des données du cookies
 
-
-  // Fonction de récupération des données du cookies
-
-  function getCookie(name) {
-    const decodedCookie = decodeURIComponent(document.cookie); // Décode les cookies
-    const cookieArray = decodedCookie.split(';'); // Sépare les différents cookies
-    for (let i = 0; i < cookieArray.length; i++) {
-        let cookie = cookieArray[i].trim(); // Supprime les espaces au début de chaque cookie
-        if (cookie.indexOf(name + "=") === 0) {
-            return cookie.substring(name.length + 1); // Retourne la valeur du cookie
-        }
+function getCookie(name) {
+  const decodedCookie = decodeURIComponent(document.cookie); // Décode les cookies
+  const cookieArray = decodedCookie.split(";"); // Sépare les différents cookies
+  for (let i = 0; i < cookieArray.length; i++) {
+    let cookie = cookieArray[i].trim(); // Supprime les espaces au début de chaque cookie
+    if (cookie.indexOf(name + "=") === 0) {
+      return cookie.substring(name.length + 1); // Retourne la valeur du cookie
     }
-    return null; // Retourne null si le cookie n'existe pas
+  }
+  return null; // Retourne null si le cookie n'existe pas
 }
 
 //Définition des constantes globales
-  const userDataCookie = getCookie("userData");
-  const userData = JSON.parse(userDataCookie);  
-  const modal = document.getElementById("modal");
-  const modalwindow = document.querySelector(".modal-window");
-  const modalaccueil = document.querySelector(".modal-accueil");
-  const modalajoutphoto = document.querySelector(".modal-ajout-photo");
+const userDataCookie = getCookie("userData");
+const userData = JSON.parse(userDataCookie);
+const modal = document.getElementById("modal");
+const modalwindow = document.querySelector(".modal-window");
+const modalaccueil = document.querySelector(".modal-accueil");
+const modalajoutphoto = document.querySelector(".modal-ajout-photo");
+const token = userData?.token; // Récupération du token utilisateur pour le header
 
-
-
-  // Fonction pour fermer la modale
-      function closeModal() {
-        // Retire la classe pour masquer la modale
-        modal.classList.remove("visible");
-        modalwindow.classList.remove("visible");
-        modalaccueil.classList.remove("visible");
-        modalajoutphoto.classList.remove("visible");
-        //appel de la fonction filtre pour actualiser les images ajoutées ou supprimées :
-        filtre();
-      }
-
-
+// Fonction pour fermer la modale
+function closeModal() {
+  // Retire la classe pour masquer la modale
+  modal.classList.remove("visible");
+  modalwindow.classList.remove("visible");
+  modalaccueil.classList.remove("visible");
+  modalajoutphoto.classList.remove("visible");
+  //appel de la fonction filtre pour actualiser les images ajoutées ou supprimées :
+  filtre();
+}
+//Suppression impossible du DOMContentLoaded
 document.addEventListener("DOMContentLoaded", function () {
   // Sélectionne l'élément de la modale et le lien d'ouverture
   const openModalLink = document.querySelector('a[href="#modal"]');
   const closeModalIcons = modal.querySelectorAll(".fa-xmark");
   const btnajoutphoto = document.querySelector(".ajoutPhoto");
   const flecheretour = document.querySelector(".fa-arrow-left");
-
-
 
   // Fonction pour ouvrir la modale ou revenir à la page d'accueil de la modale
   function openModal(event) {
@@ -63,8 +61,6 @@ document.addEventListener("DOMContentLoaded", function () {
     modalaccueil.classList.remove("visible"); // Masque le contenu de la page d'accueil
     modalajoutphoto.classList.add("visible"); // Ajoute la classe pour visualisation du formulaire
   }
-
-
 
   // Ajoute l'événement de clic pour ouvrir la modale, if réajouter pour éviter erreur d'existence hors mode admin
   if (openModalLink) {
@@ -101,7 +97,7 @@ async function afficherImagesModal() {
     const containerModal = document.querySelector(".gallery-modal");
     containerModal.innerHTML = ""; // Vide le contenu modal
 
-    images.forEach(image => {
+    images.forEach((image) => {
       const fig = document.createElement("figure");
 
       const imgelement = document.createElement("img");
@@ -114,29 +110,14 @@ async function afficherImagesModal() {
 
       // Ajouter un événement de clic sur l'icône "trash"
       trashIcon.addEventListener("click", async function () {
-        try {
-          // Récupération du token utilisateur pour le header
-          const token = userData?.token;
-          console.log(token);
-          
-          // Suppression de l'image via API
-          const response = await fetch(`http://localhost:5678/api/works/${image.id}`, {
-            method: "DELETE",
-            headers: {
-              "Content-Type": "application/json",
-              Authorization: `Bearer ${token}`,
-            },
-          });
+        
 
-          // Si la suppression est réussie
-          if (response.ok) {
-            fig.remove(); // Retirer l'image du DOM
-            console.log(`Image avec ID ${image.id} supprimée avec succès.`);
-          } else {
-            console.error("Erreur lors de la suppression de l'image :", response.statusText);
-          }
-        } catch (error) {
-          console.error("Erreur lors de la requête DELETE :", error);
+
+        // Utilisation de la fonction de suppression depuis api.js
+        const success = await supprimerImage(image.id, token);
+
+        if (success) {
+          fig.remove(); // Retirer l'image du DOM
         }
       });
 
@@ -148,14 +129,13 @@ async function afficherImagesModal() {
 
     // Retourner les images pour réutilisation
     return images;
-
   } catch (error) {
-    console.error("Erreur lors de l'affichage des images dans la modal :", error);
+    console.error(
+      "Erreur lors de l'affichage des images dans la modal :",
+      error
+    );
   }
 }
-
-
-
 
 // Appel de la fonction
 afficherImagesModal();
@@ -166,9 +146,9 @@ afficherImagesModal();
 async function afficherOptionsCategories() {
   try {
     const categories = await recupererCategories();
-    
+
     const selectCategorie = document.getElementById("categorie");
-    
+
     categories.forEach((category) => {
       const option = document.createElement("option");
       option.value = category.id;
@@ -176,10 +156,12 @@ async function afficherOptionsCategories() {
       selectCategorie.appendChild(option);
     });
   } catch (error) {
-    console.error("Erreur lors de l'affichage des options de catégories :", error);
+    console.error(
+      "Erreur lors de l'affichage des options de catégories :",
+      error
+    );
   }
 }
-
 
 //Modification du div photo upload, suppression des éléments puis ajout de la photo chargée
 
@@ -229,14 +211,14 @@ function verifierFormulaireComplet() {
 
 // Ajout de la classe .complete pour le bouton Valider si le formulaire est complet
 function gererBoutonValider() {
-  const erreurDiv = document.getElementById('erreur-formulaire');
+  const erreurDiv = document.getElementById("erreur-formulaire");
   const boutonValider = document.querySelector(
     '.modal-ajout-photo input[type="submit"]'
   );
 
   if (verifierFormulaireComplet()) {
     boutonValider.classList.add("complete");
-    erreurDiv.innerHTML = '';
+    erreurDiv.innerHTML = "";
   } else {
     boutonValider.classList.remove("complete");
   }
@@ -244,16 +226,17 @@ function gererBoutonValider() {
 
 // Gestion des erreurs lors de la soumission si des champs sont vides, fonction alerte à revoir
 function afficherErreurFormulaire() {
-  const erreurDiv2 = document.getElementById('erreur-formulaire');
-  
+  const erreurDiv2 = document.getElementById("erreur-formulaire");
+
   // Réinitialiser le message d'erreur à chaque soumission
-  erreurDiv2.innerHTML = '';
+  erreurDiv2.innerHTML = "";
 
   if (!verifierFormulaireComplet()) {
-     // Créer le message d'erreur et l'ajouter au DOM
-    const messageErreur = document.createElement('p');
-    messageErreur.textContent = "Veuillez remplir tous les champs avant de soumettre.";
-    messageErreur.style.color = 'red'; // Optionnel si vous voulez spécifier la couleur ici aussi
+    // Créer le message d'erreur et l'ajouter au DOM
+    const messageErreur = document.createElement("p");
+    messageErreur.textContent =
+      "Veuillez remplir tous les champs avant de soumettre.";
+    messageErreur.style.color = "red"; // Optionnel si vous voulez spécifier la couleur ici aussi
 
     // Ajouter le message d'erreur sous la catégorie
     erreurDiv2.appendChild(messageErreur);
@@ -271,7 +254,7 @@ async function envoyerFormulaire(event) {
     afficherErreurFormulaire();
     return;
   }
-
+// Permet de'éviter l'envoi du formulaire avant le clic sur le bouton
   event.preventDefault();
 
   const formData = new FormData();
@@ -283,26 +266,19 @@ async function envoyerFormulaire(event) {
   formData.append("title", titreInput.value);
   formData.append("category", categorieInput.value);
 
-  console.log("Contenu du FormData :");
+
   formData.forEach((value, key) => {
     console.log(key + ":", value);
   });
 
   try {
-    // Récupération des données stockées dans le cookie pour créer le header de l'appel api
+   
+    // Appel de la fonction présente dans api.js
 
-    const token2 = userData?.token;
+    const success = await ajouterImage(formData, token);
 
-    const response = await fetch("http://localhost:5678/api/works", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token2}`,
-      },
-      body: formData,
-    });
-
-    if (response.status === 201) {
-      
+    
+    if (success) {
       // Insérer la nouvelle image dans le DOM (par exemple dans la galerie)
       afficherImagesModal(); // Recharger les images après ajout
       // Vider le contenu du formulaire après la soumission réussie
@@ -329,18 +305,16 @@ async function envoyerFormulaire(event) {
 
       // Désactiver le bouton si le formulaire est vide après la réinitialisation
       boutonValider.classList.remove("complete");
-      // Appel de la fonction pour fermer la modale 
+      // Appel de la fonction pour fermer la modale
       closeModal();
-    } else {
-      console.error("Erreur lors de l'ajout :", response.statusText);
-    }
+    } 
   } catch (error) {
     console.error("Erreur lors de l'envoi du formulaire :", error);
   }
 }
 
 // Ajout des listeners
-document.addEventListener("DOMContentLoaded", function () {
+
   afficherOptionsCategories();
 
   const photoInput = document.getElementById("photo-upload-input");
@@ -355,4 +329,3 @@ document.addEventListener("DOMContentLoaded", function () {
   categorieInput.addEventListener("change", gererBoutonValider);
 
   boutonValider.addEventListener("click", envoyerFormulaire);
-});
