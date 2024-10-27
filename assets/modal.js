@@ -6,28 +6,15 @@ import { recupererImages } from "./api.js";
 import { supprimerImage } from "./api.js";
 import { ajouterImage } from './api.js';
 
-// Fonction de récupération des données du cookies
-
-function getCookie(name) {
-  const decodedCookie = decodeURIComponent(document.cookie); // Décode les cookies
-  const cookieArray = decodedCookie.split(";"); // Sépare les différents cookies
-  for (let i = 0; i < cookieArray.length; i++) {
-    let cookie = cookieArray[i].trim(); // Supprime les espaces au début de chaque cookie
-    if (cookie.indexOf(name + "=") === 0) {
-      return cookie.substring(name.length + 1); // Retourne la valeur du cookie
-    }
-  }
-  return null; // Retourne null si le cookie n'existe pas
-}
 
 //Définition des constantes globales
-const userDataCookie = getCookie("userData");
-const userData = JSON.parse(userDataCookie);
+const userData = JSON.parse(localStorage.getItem("userData"));
+// Extraction du token depuis les données récupérées
+const token = userData?.token;
 const modal = document.getElementById("modal");
 const modalwindow = document.querySelector(".modal-window");
 const modalaccueil = document.querySelector(".modal-accueil");
 const modalajoutphoto = document.querySelector(".modal-ajout-photo");
-const token = userData?.token; // Récupération du token utilisateur pour le header
 
 
 

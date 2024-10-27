@@ -1,19 +1,9 @@
-// Fonction pour créer le cookie
-function setCookie(name, value, days) {
-  const date = new Date();
-  date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000)); // définir la durée en jours
-  const expires = "expires=" + date.toUTCString();
-  document.cookie = name + "=" + value + ";" + expires + ";path=/";
-}
-
-
 
 async function envoiLogin() {
   document
     .getElementById("loginForm")
     .addEventListener("submit", async function (event) {
       event.preventDefault(); // Empêche la soumission du formulaire
-
       const mail = document.getElementById("mail").value;
       const password = document.getElementById("password").value;
 
@@ -66,7 +56,7 @@ async function envoiLogin() {
         if (response.ok) {
           const data = await response.json();
           // stocker la response dans le local storage
-          setCookie("userData", JSON.stringify(data), 1);
+          localStorage.setItem("userData", JSON.stringify(data));
           // Rediriger vers la page index
           window.location.href = "./index.html";
         } else {
