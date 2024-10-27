@@ -19,7 +19,7 @@ function getCookie(name) {
 
 
 export function logout() {
-    // Supprime les données utilisateur du localStorage
+    // Supprime le cookie d'authentification
     deleteCookie("userData")
     console.log('Déconnexion réussie, les données utilisateur ont été supprimées.');
     
@@ -30,7 +30,7 @@ export function logout() {
   // Initialiser le lien de navigation au chargement du DOM
   
   
-    // Vérifie si des données utilisateur existent dans le localStorage
+    // Vérifie si des données utilisateur existent dans le cookie
     const userDataString = getCookie("userData");
     const navItem = document.querySelector('.appBar_navItem');
     const h2 = document.querySelector('#portfolio h2');
@@ -54,6 +54,12 @@ export function logout() {
         spaceDiv.style.height = '60px'; 
         spaceDiv.classList.add('compensation-space');
          filtresDiv.insertAdjacentElement('afterend', spaceDiv);
+         // ajout de la top bar noire en ajoutant la classe visible
+         const topBar = document.querySelector(".top-bar");
+         topBar.classList.add("visible");
+         // compensation de la marge suite à l'ajout de la top bar
+         const titleNav = document.querySelector(".titleAndNav");
+         titleNav.classList.add("admin")
       } else {
         // Si l'utilisateur n'est pas connecté, afficher "login"
         navItem.textContent = 'login';

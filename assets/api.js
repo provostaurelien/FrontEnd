@@ -1,4 +1,4 @@
-// Appel API pour récupération des filtres
+// Appel API pour récupération des catégories
 export async function recupererCategories() {
   try {
     const response = await fetch("http://localhost:5678/api/categories");

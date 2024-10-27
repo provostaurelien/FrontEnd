@@ -29,6 +29,8 @@ const modalaccueil = document.querySelector(".modal-accueil");
 const modalajoutphoto = document.querySelector(".modal-ajout-photo");
 const token = userData?.token; // Récupération du token utilisateur pour le header
 
+
+
 // Fonction pour fermer la modale
 function closeModal() {
   // Retire la classe pour masquer la modale
@@ -39,8 +41,7 @@ function closeModal() {
   //appel de la fonction filtre pour actualiser les images ajoutées ou supprimées :
   filtre();
 }
-//Suppression impossible du DOMContentLoaded
-document.addEventListener("DOMContentLoaded", function () {
+
   // Sélectionne l'élément de la modale et le lien d'ouverture
   const openModalLink = document.querySelector('a[href="#modal"]');
   const closeModalIcons = modal.querySelectorAll(".fa-xmark");
@@ -86,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
       closeModal();
     }
   });
-});
+
 
 // Gestion de l'affichage des images dans la galerie photo
 
