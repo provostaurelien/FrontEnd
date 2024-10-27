@@ -195,6 +195,10 @@ li:hover {
 /* Gestion du header */
 /* Ajout de la barre noire lorsque le mode admin est actif */
 
+.top-bar {
+  display: none;
+}
+
 .top-bar.visible  {
   position: absolute; /* fixed possible pour mainteni position lors du defilement*/
   top: 0;
