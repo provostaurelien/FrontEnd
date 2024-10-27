@@ -208,7 +208,7 @@ li:hover {
   /* Gestion du contenu texte + ancre de la top bar */
   color: white;
   font-size: 16px;
-  font-family: Work Sans;
+  font-family: "Work Sans";
   font-weight: 400;
   display: flex;
   align-items: center; 
@@ -312,7 +312,6 @@ li:hover {
   color: white;
   background-color: #1d6154;
   border: 2px solid;
-  border-color: #1d6154;
   border-radius: 60px;
   text-align: center;
 }
@@ -323,7 +322,6 @@ button.active {
   color: white;
   background-color: #1d6154;
   border: 2px solid;
-  border-color: #1d6154;
   border-radius: 60px;
   text-align: center;
   padding: 10px 49px;
@@ -350,7 +348,7 @@ button.active {
 .edit-icon {
   text-align: center;
   padding: 8px;
-  font-family: Work Sans;
+  font-family: "Work Sans";
   font-size: 14px;
   font-weight: 400;
   margin-left: 10px;
@@ -455,7 +453,6 @@ footer nav ul {
   color: white;
   background-color: #1d6154;
   border: 2px solid;
-  border-color: #1d6154;
   border-radius: 60px;
   text-align: center;
 }
@@ -603,7 +600,7 @@ figure img {
   color: white;
   align-self: center;
   width: 60%;
-  font-family: Work Sans;
+  font-family: "Work Sans";
   font-size: 14px;
   color: #306685;
   text-align: center;
@@ -613,7 +610,7 @@ figure img {
 }
 
 .modal-ajout-photo .photo-upload {
-  font-family: Work Sans;
+  font-family: "Work Sans";
   font-size: 12px;
   color: #888; /* Couleur grise pour le texte */
 }
@@ -634,7 +631,7 @@ figure img {
 }
 .modal-ajout-photo label {
   font-size: 14px;
-  font-family: Work Sans;
+  font-family: "Work Sans";
   font-weight: 500;
   margin: 2em 0 1em 0;
 }
